@@ -13,7 +13,7 @@ export interface Software {
   is_archived: boolean;
   created_at: string;
   updated_at: string;
-  developer_profile?: {
+  developer?: {
     username: string;
     avatar_url?: string;
   };
@@ -38,11 +38,14 @@ export const softwareApi = {
       .insert([data])
       .select(`
         *,
-        developer_profile:developer_id(username, avatar_url)
+        developer:profiles!developer_id(username, avatar_url)
       `)
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('createSoftware error:', error);
+      throw error;
+    }
     return result as Software;
   },
 
@@ -56,7 +59,7 @@ export const softwareApi = {
       .from('softwares')
       .select(`
         *,
-        developer_profile:developer_id(username, avatar_url)
+        developer:profiles!developer_id(username, avatar_url)
       `)
       .eq('is_archived', false);
 
@@ -82,7 +85,10 @@ export const softwareApi = {
 
     const { data, error } = await query;
 
-    if (error) throw error;
+    if (error) {
+      console.error('API error:', error);
+      throw error;
+    }
     return data as Software[];
   },
 
@@ -91,12 +97,15 @@ export const softwareApi = {
       .from('softwares')
       .select(`
         *,
-        developer_profile:developer_id(username, avatar_url)
+        developer:profiles!developer_id(username, avatar_url)
       `)
       .eq('id', id)
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('API error:', error);
+      throw error;
+    }
     return data as Software;
   },
 
@@ -107,11 +116,14 @@ export const softwareApi = {
       .eq('id', id)
       .select(`
         *,
-        developer_profile:developer_id(username, avatar_url)
+        developer:profiles!developer_id(username, avatar_url)
       `)
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('API error:', error);
+      throw error;
+    }
     return data as Software;
   },
 
@@ -123,7 +135,10 @@ export const softwareApi = {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('API error:', error);
+      throw error;
+    }
     return data;
   },
 
@@ -133,7 +148,10 @@ export const softwareApi = {
       .delete()
       .eq('id', id);
 
-    if (error) throw error;
+    if (error) {
+      console.error('API error:', error);
+      throw error;
+    }
   },
 
   async getMySoftware() {
@@ -152,12 +170,15 @@ export const softwareApi = {
       .from('softwares')
       .select(`
         *,
-        developer_profile:developer_id(username, avatar_url)
+        developer:profiles!developer_id(username, avatar_url)
       `)
       .eq('developer_id', profile.id)
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('API error:', error);
+      throw error;
+    }
     return data as Software[];
   },
 
@@ -167,7 +188,10 @@ export const softwareApi = {
       .select('category')
       .eq('is_archived', false);
 
-    if (error) throw error;
+    if (error) {
+      console.error('API error:', error);
+      throw error;
+    }
     
     const categories = [...new Set(data.map(item => item.category))];
     return categories;
@@ -179,7 +203,10 @@ export const softwareApi = {
       .select('tags')
       .eq('is_archived', false);
 
-    if (error) throw error;
+    if (error) {
+      console.error('API error:', error);
+      throw error;
+    }
 
     const tagCount: Record<string, number> = {};
     

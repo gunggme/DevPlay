@@ -67,16 +67,16 @@ export function SoftwarePage() {
         </div>
 
         {/* 필터 섹션 */}
-        <div className="bg-white rounded-lg border p-4 mb-6">
+        <div className="bg-card rounded-lg border p-4 mb-6">
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 카테고리
               </label>
               <select
                 value={filters.category}
                 onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 border rounded-md bg-background text-foreground"
               >
                 <option value="">전체 카테고리</option>
                 {categories?.map(category => (
@@ -85,7 +85,7 @@ export function SoftwarePage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 검색
               </label>
               <input
@@ -93,7 +93,7 @@ export function SoftwarePage() {
                 value={filters.search}
                 onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
                 placeholder="소프트웨어 이름 또는 설명 검색"
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-full p-2 border rounded-md bg-background text-foreground"
               />
             </div>
           </div>
@@ -101,13 +101,13 @@ export function SoftwarePage() {
 
         {/* 소프트웨어 목록 */}
         {!softwareList || softwareList.length === 0 ? (
-          <div className="bg-white rounded-lg border p-8 text-center">
-            <p className="text-gray-500">등록된 소프트웨어가 없습니다.</p>
+          <div className="bg-card rounded-lg border p-8 text-center">
+            <p className="text-muted-foreground">등록된 소프트웨어가 없습니다.</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {softwareList.map((software) => (
-              <div key={software.id} className="bg-white rounded-lg border overflow-hidden hover:shadow-lg transition-shadow">
+              <div key={software.id} className="bg-card rounded-lg border overflow-hidden hover:shadow-lg transition-shadow">
                 {software.image_url && (
                   <div className="h-48 overflow-hidden">
                     <img
@@ -121,35 +121,35 @@ export function SoftwarePage() {
                 <div className="p-4">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-lg font-semibold">{software.name}</h3>
-                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                    <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
                       {software.category}
                     </span>
                   </div>
                   
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-3">
+                  <p className="text-muted-foreground text-sm mb-3 line-clamp-3">
                     {software.description}
                   </p>
                   
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
-                        {software.developer_profile?.avatar_url ? (
+                      <div className="w-6 h-6 bg-muted rounded-full flex items-center justify-center">
+                        {software.developer?.avatar_url ? (
                           <img
-                            src={software.developer_profile.avatar_url}
-                            alt={software.developer_profile.username}
+                            src={software.developer.avatar_url}
+                            alt={software.developer.username}
                             className="w-full h-full rounded-full object-cover"
                           />
                         ) : (
-                          <span className="text-xs font-semibold text-gray-500">
-                            {software.developer_profile?.username?.charAt(0).toUpperCase()}
+                          <span className="text-xs font-semibold text-muted-foreground">
+                            {software.developer?.username?.charAt(0).toUpperCase()}
                           </span>
                         )}
                       </div>
-                      <span className="text-xs text-gray-600">
-                        {software.developer_profile?.username}
+                      <span className="text-xs text-muted-foreground">
+                        {software.developer?.username}
                       </span>
                     </div>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-muted-foreground">
                       {new Date(software.created_at).toLocaleDateString()}
                     </span>
                   </div>
@@ -159,13 +159,13 @@ export function SoftwarePage() {
                       {software.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="text-xs bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded"
+                          className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded"
                         >
                           {tag}
                         </span>
                       ))}
                       {software.tags.length > 3 && (
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-muted-foreground">
                           +{software.tags.length - 3}
                         </span>
                       )}
@@ -216,7 +216,7 @@ export function SoftwarePage() {
                         size="sm"
                         variant="secondary"
                         onClick={() => handleDelete(software.id)}
-                        className="flex-1 text-xs text-red-600 hover:bg-red-50"
+                        className="flex-1 text-xs text-destructive hover:bg-destructive/10"
                         disabled={deleteSoftware.isPending}
                       >
                         삭제
