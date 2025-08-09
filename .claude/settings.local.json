@@ -6,7 +6,18 @@
       "Bash(npx tailwindcss init:*)",
       "Bash(mkdir:*)",
       "Bash(rm:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run test:run:*)",
+      "Bash(npm run build:*)",
+      "Bash(git add:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(npx playwright:*)",
+      "Bash(npm start)",
+      "Bash(npm run:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": []
   }

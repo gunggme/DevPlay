@@ -1,0 +1,849 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\playwright.config.ts",
+    "rootDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 10
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ],
+      [
+        "line",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 10
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 10
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 10
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 10
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 10
+        },
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "C:/Users/gunggme/Desktop/othermake/DevPlay/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.2",
+    "workers": 10,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:5173",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "retest-with-testids.spec.ts",
+      "file": "retest-with-testids.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "DevPlay 수정된 기능 재테스트 - 고유 선택자 사용",
+          "file": "retest-with-testids.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "로그인 모달 닫기 기능 재테스트",
+              "file": "retest-with-testids.spec.ts",
+              "line": 11,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "로그인 모달 열기 및 data-testid 확인",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 6273,
+                          "error": {
+                            "message": "Error: \u001b[31mTimed out 5000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByPlaceholder('이메일을 입력하세요')\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByPlaceholder('이메일을 입력하세요')\u001b[22m\n",
+                            "stack": "Error: \u001b[31mTimed out 5000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByPlaceholder('이메일을 입력하세요')\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByPlaceholder('이메일을 입력하세요')\u001b[22m\n\n    at C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts:20:57",
+                            "location": {
+                              "file": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts",
+                              "column": 57,
+                              "line": 20
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 18 |\u001b[39m       \n \u001b[90m 19 |\u001b[39m       \u001b[90m// 모달 내용 확인\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 20 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByPlaceholder(\u001b[32m'이메일을 입력하세요'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 21 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByPlaceholder(\u001b[32m'비밀번호를 입력하세요'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 22 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 23 |\u001b[39m\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts",
+                                "column": 57,
+                                "line": 20
+                              },
+                              "message": "Error: \u001b[31mTimed out 5000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByPlaceholder('이메일을 입력하세요')\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByPlaceholder('이메일을 입력하세요')\u001b[22m\n\n\n  18 |       \n  19 |       // 모달 내용 확인\n> 20 |       await expect(page.getByPlaceholder('이메일을 입력하세요')).toBeVisible();\n     |                                                         ^\n  21 |       await expect(page.getByPlaceholder('비밀번호를 입력하세요')).toBeVisible();\n  22 |     });\n  23 |\n    at C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts:20:57"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:12.972Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-4ef2a--로그인-모달-열기-및-data-testid-확인-chromium\\test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-4ef2a--로그인-모달-열기-및-data-testid-확인-chromium\\video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-4ef2a--로그인-모달-열기-및-data-testid-확인-chromium\\error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts",
+                            "column": 57,
+                            "line": 20
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-ccae70be3f2386c89343",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 12,
+                  "column": 5
+                },
+                {
+                  "title": "X 버튼으로 모달 닫기 기능 테스트",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 1210,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:12.987Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-b0f8051cd1f491739df7",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 24,
+                  "column": 5
+                },
+                {
+                  "title": "ESC 키로 모달 닫기 기능 테스트",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 1288,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:12.989Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-21f99b917a9551eff21f",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 42,
+                  "column": 5
+                },
+                {
+                  "title": "모달 외부 클릭으로 닫기 기능 테스트",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 1200,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:13.003Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-48ce76a583103c2b17d5",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 54,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "고유 선택자를 사용한 페이지 라우팅 테스트",
+              "file": "retest-with-testids.spec.ts",
+              "line": 67,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "헤더 네비게이션 - 소프트웨어 페이지 (data-testid 사용)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 4,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 1353,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:13.002Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-3217e0d79a0b17551e58",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 68,
+                  "column": 5
+                },
+                {
+                  "title": "헤더 네비게이션 - 스레드 페이지 (data-testid 사용)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 5,
+                          "parallelIndex": 5,
+                          "status": "timedOut",
+                          "duration": 31124,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts",
+                                "column": 18,
+                                "line": 74
+                              },
+                              "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"header-thread-link\"]')\u001b[22m\n\n\n  72 |\n  73 |     test('헤더 네비게이션 - 스레드 페이지 (data-testid 사용)', async ({ page }) => {\n> 74 |       await page.click('[data-testid=\"header-thread-link\"]');\n     |                  ^\n  75 |       await expect(page).toHaveURL(`${BASE_URL}/thread`);\n  76 |     });\n  77 |\n    at C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts:74:18"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:13.004Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-aa7c1-션---스레드-페이지-data-testid-사용--chromium\\test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-aa7c1-션---스레드-페이지-data-testid-사용--chromium\\video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-aa7c1-션---스레드-페이지-data-testid-사용--chromium\\error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-1b2a3e18243045d3505d",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 73,
+                  "column": 5
+                },
+                {
+                  "title": "CTA 버튼 - 소프트웨어 둘러보기 (data-testid 사용)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 6,
+                          "parallelIndex": 6,
+                          "status": "passed",
+                          "duration": 1105,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:12.980Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-3cd42e6d27a46a506368",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 78,
+                  "column": 5
+                },
+                {
+                  "title": "푸터 링크 - 소프트웨어 페이지 (data-testid 사용)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 7,
+                          "status": "passed",
+                          "duration": 1273,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:13.034Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-6101ac27e3c83106e4bd",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 83,
+                  "column": 5
+                },
+                {
+                  "title": "푸터 링크 - 스레드 페이지 (data-testid 사용)",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 8,
+                          "parallelIndex": 8,
+                          "status": "timedOut",
+                          "duration": 31096,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts",
+                                "column": 18,
+                                "line": 89
+                              },
+                              "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"footer-thread-link\"]')\u001b[22m\n\n\n  87 |\n  88 |     test('푸터 링크 - 스레드 페이지 (data-testid 사용)', async ({ page }) => {\n> 89 |       await page.click('[data-testid=\"footer-thread-link\"]');\n     |                  ^\n  90 |       await expect(page).toHaveURL(`${BASE_URL}/thread`);\n  91 |     });\n  92 |   });\n    at C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts:89:18"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:13.017Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-adae5-크---스레드-페이지-data-testid-사용--chromium\\test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-adae5-크---스레드-페이지-data-testid-사용--chromium\\video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-adae5-크---스레드-페이지-data-testid-사용--chromium\\error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-452ae2c0011d782d1203",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 88,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "중복 선택자 문제 해결 확인",
+              "file": "retest-with-testids.spec.ts",
+              "line": 94,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "동일한 텍스트 링크들이 고유하게 구별되는지 확인",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 9,
+                          "status": "passed",
+                          "duration": 1313,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:13.023Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-174d1d6059ed7982d9c5",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 95,
+                  "column": 5
+                },
+                {
+                  "title": "각 링크가 올바른 기능을 수행하는지 개별 테스트",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 6,
+                          "parallelIndex": 6,
+                          "status": "passed",
+                          "duration": 811,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:14.168Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-9775bec58e96cc756321",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 120,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "키보드 접근성 재테스트",
+              "file": "retest-with-testids.spec.ts",
+              "line": 141,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "Tab 키 네비게이션으로 로그인 버튼까지 이동",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 754,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:14.277Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-a9329a44b1f33da7706a",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 142,
+                  "column": 5
+                },
+                {
+                  "title": "Enter 키로 고유 선택자 링크 활성화",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "passed",
+                          "duration": 754,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:14.308Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-3014ceb7b3cfad92ef56",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 168,
+                  "column": 5
+                }
+              ]
+            },
+            {
+              "title": "성능 및 안정성 검증",
+              "file": "retest-with-testids.spec.ts",
+              "line": 176,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "모달 열기/닫기 연속 작업 안정성 테스트",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 1150,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:14.377Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-7d09733febbc11cf35f6",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 177,
+                  "column": 5
+                },
+                {
+                  "title": "라우팅 연속 작업 안정성 테스트",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 7,
+                          "status": "timedOut",
+                          "duration": 30831,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts",
+                                "column": 20,
+                                "line": 201
+                              },
+                              "message": "Error: page.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"header-thread-link\"]')\u001b[22m\n\n\n  199 |\n  200 |       for (const route of routes) {\n> 201 |         await page.click(`[data-testid=\"${route.testid}\"]`);\n      |                    ^\n  202 |         await expect(page).toHaveURL(`${BASE_URL}${route.url}`);\n  203 |         \n  204 |         // 홈으로 돌아가기\n    at C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\tests\\retest-with-testids.spec.ts:201:20"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-08-08T18:13:14.497Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-febc9--및-안정성-검증-라우팅-연속-작업-안정성-테스트-chromium\\test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-febc9--및-안정성-검증-라우팅-연속-작업-안정성-테스트-chromium\\video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "C:\\Users\\gunggme\\Desktop\\othermake\\DevPlay\\test-results\\retest-with-testids-DevPla-febc9--및-안정성-검증-라우팅-연속-작업-안정성-테스트-chromium\\error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "9075830361921c0d86cb-dc35352a3ab1da6c8f91",
+                  "file": "retest-with-testids.spec.ts",
+                  "line": 193,
+                  "column": 5
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-08-08T18:13:11.995Z",
+    "duration": 33388.485,
+    "expected": 11,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}
