@@ -6,6 +6,7 @@ import { ProfilePage } from '@/features/profile/view/ProfilePage';
 import { SoftwarePage } from '@/features/software/view/SoftwarePage';
 import { SoftwareDetailPage } from '@/features/software/view/SoftwareDetailPage';
 import { ThreadsPage } from '@/features/threads/view/ThreadsPage';
+import { ThreadDetailPage } from '@/features/threads/view/components/ThreadDetailPage';
 import { AdminPage } from '@/features/admin/view/AdminPage';
 import { NotFoundPage } from '@/shared/ui/NotFoundPage';
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: 'threads',
         element: <ThreadsPage />,
+      },
+      {
+        path: 'threads/:threadId',
+        element: <ThreadDetailPage />,
       },
       {
         path: 'admin',

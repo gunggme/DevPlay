@@ -26,6 +26,8 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
     github_url: ''
   });
   const [newTag, setNewTag] = useState('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (software) {
@@ -51,8 +53,63 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
     }
   }, [software, isOpen]);
 
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    // Required field validation
+    if (!formData.name.trim()) {
+      newErrors.name = '소프트웨어 이름은 필수입니다';
+    } else if (formData.name.length < 2) {
+      newErrors.name = '소프트웨어 이름은 2자 이상이어야 합니다';
+    } else if (formData.name.length > 100) {
+      newErrors.name = '소프트웨어 이름은 100자 이하여야 합니다';
+    }
+
+    if (!formData.description.trim()) {
+      newErrors.description = '설명은 필수입니다';
+    } else if (formData.description.length < 10) {
+      newErrors.description = '설명은 10자 이상이어야 합니다';
+    } else if (formData.description.length > 1000) {
+      newErrors.description = '설명은 1000자 이하여야 합니다';
+    }
+
+    if (!formData.category) {
+      newErrors.category = '카테고리를 선택해주세요';
+    }
+
+    if (!formData.download_url.trim()) {
+      newErrors.download_url = '다운로드 URL은 필수입니다';
+    } else if (!/^https?:\/\/.+/.test(formData.download_url)) {
+      newErrors.download_url = '올바른 URL 형식을 입력해주세요 (http:// 또는 https://)';
+    }
+
+    // Optional field validation
+    if (formData.github_url && !/^https?:\/\/.+/.test(formData.github_url)) {
+      newErrors.github_url = '올바른 URL 형식을 입력해주세요 (http:// 또는 https://)';
+    }
+
+    if (formData.image_url && !/^https?:\/\/.+/.test(formData.image_url)) {
+      newErrors.image_url = '올바른 URL 형식을 입력해주세요 (http:// 또는 https://)';
+    }
+
+    // Tags validation
+    if (formData.tags && formData.tags.length > 10) {
+      newErrors.tags = '태그는 최대 10개까지 추가할 수 있습니다';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setErrors({});
     
     try {
       if (software) {
@@ -64,8 +121,24 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
         await createSoftware.mutateAsync(formData);
       }
       onClose();
-    } catch (error) {
+      // Reset form on successful submission
+      setFormData({
+        name: '',
+        description: '',
+        category: '',
+        tags: [],
+        image_url: '',
+        download_url: '',
+        github_url: ''
+      });
+    } catch (error: unknown) {
       console.error('Form submission error:', error);
+      const errorMessage = error instanceof Error ? error.message : '저장 중 오류가 발생했습니다. 다시 시도해주세요.';
+      setErrors({
+        submit: errorMessage
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -95,7 +168,16 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
     }
   };
 
-  const isSubmitting = createSoftware.isPending || updateSoftware.isPending;
+  const renderError = (field: string) => {
+    if (errors[field]) {
+      return (
+        <p className="mt-1 text-sm text-destructive" data-testid={`error-${field}`}>
+          {errors[field]}
+        </p>
+      );
+    }
+    return null;
+  };
 
   return (
     <Modal
@@ -105,6 +187,12 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
       size="lg"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
+        {errors.submit && (
+          <div className="rounded-md bg-destructive/10 p-3" data-testid="form-error">
+            <p className="text-sm text-destructive">{errors.submit}</p>
+          </div>
+        )}
+        
         <div>
           <label htmlFor="name" className="mb-1 block text-sm font-medium text-foreground">
             소프트웨어 이름 *
@@ -115,9 +203,13 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.name}
             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
+            className={`w-full rounded-md border bg-background p-2 text-foreground focus:ring-2 ${
+              errors.name ? 'border-destructive focus:border-destructive focus:ring-destructive' 
+              : 'border-input focus:border-primary focus:ring-primary'
+            }`}
             placeholder="소프트웨어 이름을 입력하세요"
           />
+          {renderError('name')}
         </div>
 
         <div>
@@ -129,10 +221,14 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.description}
             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
+            className={`w-full rounded-md border bg-background p-2 text-foreground focus:ring-2 ${
+              errors.description ? 'border-destructive focus:border-destructive focus:ring-destructive' 
+              : 'border-input focus:border-primary focus:ring-primary'
+            }`}
             rows={3}
             placeholder="소프트웨어에 대한 설명을 입력하세요"
           />
+          {renderError('description')}
         </div>
 
         <div>
@@ -144,7 +240,10 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.category}
             onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
+            className={`w-full rounded-md border bg-background p-2 text-foreground focus:ring-2 ${
+              errors.category ? 'border-destructive focus:border-destructive focus:ring-destructive' 
+              : 'border-input focus:border-primary focus:ring-primary'
+            }`}
           >
             <option value="">카테고리를 선택하세요</option>
             <option value="개발도구">개발도구</option>
@@ -161,6 +260,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
               )
             ))}
           </select>
+          {renderError('category')}
         </div>
 
         <div>
@@ -173,9 +273,13 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.download_url}
             onChange={(e) => setFormData(prev => ({ ...prev, download_url: e.target.value }))}
-            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
+            className={`w-full rounded-md border bg-background p-2 text-foreground focus:ring-2 ${
+              errors.download_url ? 'border-destructive focus:border-destructive focus:ring-destructive' 
+              : 'border-input focus:border-primary focus:ring-primary'
+            }`}
             placeholder="https://example.com/download"
           />
+          {renderError('download_url')}
         </div>
 
         <div>

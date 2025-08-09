@@ -1,6 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { roleRequestsApi, type RoleRequest } from '../api/roleRequests';
 import { toast } from 'react-hot-toast';
+import { useAppDispatch } from '@/store/hooks';
+import { refreshProfile } from '@/features/auth/model/authSlice';
 
 const QUERY_KEYS = {
   roleRequests: 'roleRequests',
@@ -47,13 +49,23 @@ export function useAllRoleRequests() {
 
 export function useApproveRoleRequest() {
   const queryClient = useQueryClient();
+  const dispatch = useAppDispatch();
 
   return useMutation({
     mutationFn: ({ requestId, adminNotes }: { requestId: string; adminNotes?: string }) =>
       roleRequestsApi.approveRoleRequest(requestId, adminNotes),
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.roleRequests] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.pendingRoleRequests] });
+      
+      // Refresh the current user's profile to reflect role changes
+      try {
+        await dispatch(refreshProfile()).unwrap();
+        console.log('✅ Profile refreshed after role approval');
+      } catch (error) {
+        console.error('❌ Failed to refresh profile after role approval:', error);
+      }
+      
       toast.success('역할 요청을 승인했습니다');
     },
     onError: (error: Error) => {

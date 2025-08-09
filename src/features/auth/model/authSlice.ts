@@ -160,6 +160,25 @@ export const updateProfile = createAsyncThunk<Profile, Partial<Profile>>(
   }
 );
 
+export const refreshProfile = createAsyncThunk<Profile | null, void>(
+  'auth/refreshProfile',
+  async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+    
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+    
+    if (error) {
+      throw error;
+    }
+    return data;
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -241,6 +260,10 @@ const authSlice = createSlice({
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         console.log('Redux: updateProfile fulfilled');
+        state.profile = action.payload;
+      })
+      .addCase(refreshProfile.fulfilled, (state, action) => {
+        console.log('Redux: refreshProfile fulfilled');
         state.profile = action.payload;
       });
   },

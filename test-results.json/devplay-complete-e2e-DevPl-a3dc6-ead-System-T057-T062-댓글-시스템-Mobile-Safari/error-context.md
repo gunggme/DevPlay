@@ -1,0 +1,42 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - link "DevPlay":
+    - /url: /
+  - button "테마 변경"
+  - button "로그인"
+- main:
+  - heading "스레드" [level=1]
+  - paragraph: 개발자와 사용자간의 소통 공간
+  - paragraph: 스레드를 불러오는 데 실패했습니다.
+  - button "다시 시도"
+- contentinfo:
+  - heading "DevPlay" [level=3]
+  - paragraph: 개발자와 사용자를 연결하는 플랫폼
+  - heading "제품" [level=4]
+  - list:
+    - listitem:
+      - link "소프트웨어":
+        - /url: /software
+    - listitem:
+      - link "스레드":
+        - /url: /threads
+  - heading "지원" [level=4]
+  - list:
+    - listitem:
+      - link "도움말":
+        - /url: /help
+    - listitem:
+      - link "개인정보 처리방침":
+        - /url: /privacy
+    - listitem:
+      - link "이용약관":
+        - /url: /terms
+  - heading "소셜" [level=4]
+  - link:
+    - /url: https://github.com
+  - link:
+    - /url: https://twitter.com
+  - paragraph: © 2025 DevPlay. All rights reserved.
+```

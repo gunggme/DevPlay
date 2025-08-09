@@ -127,9 +127,10 @@ export function Header() {
                           src={profile.avatar_url}
                           alt={profile.username}
                           className="size-8 rounded-full"
+                          data-testid="user-avatar"
                         />
                       ) : (
-                        <div className="flex size-8 items-center justify-center rounded-full bg-primary/10">
+                        <div className="flex size-8 items-center justify-center rounded-full bg-primary/10" data-testid="user-avatar">
                           <User className="size-4" />
                         </div>
                       )}
@@ -139,7 +140,7 @@ export function Header() {
                     </button>
                     
                     {showUserMenu && (
-                      <div className="absolute right-0 z-50 mt-2 w-48 rounded-md border bg-background py-1 shadow-lg">
+                      <div className="absolute right-0 z-50 mt-2 w-48 rounded-md border bg-background py-1 shadow-lg" data-testid="profile-menu">
                         <Link
                           to={`/profile/${profile?.username || 'me'}`}
                           className="block px-4 py-2 text-sm hover:bg-accent"

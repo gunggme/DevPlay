@@ -95,9 +95,7 @@ export const threadsApi = {
     let query = supabase
       .from('threads')
       .select(`
-        *,
-        author_profile:author_id(username, avatar_url, role),
-        software:software_id(name, id)
+        *
       `);
 
     if (software_id) {
