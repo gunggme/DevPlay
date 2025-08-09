@@ -33,20 +33,38 @@ export interface UpdateSoftwareData extends Partial<CreateSoftwareData> {}
 
 export const softwareApi = {
   async createSoftware(data: CreateSoftwareData) {
+    // Get current user's profile first
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('user_id', user.id)
+      .single();
+
+    if (!profile) throw new Error('Profile not found');
+
+    // Create software with developer_id
     const { data: result, error } = await supabase
       .from('softwares')
-      .insert([data])
-      .select(`
-        *,
-        profiles!softwares_developer_id_fkey(username, avatar_url)
-      `)
+      .insert([{ ...data, developer_id: profile.id }])
+      .select('*')
       .single();
 
     if (error) {
       console.error('createSoftware error:', error);
       throw error;
     }
-    return result as Software;
+
+    // Fetch profile separately
+    const { data: devProfile } = await supabase
+      .from('profiles')
+      .select('username, avatar_url')
+      .eq('id', result.developer_id)
+      .single();
+
+    return { ...result, profiles: devProfile } as Software;
   },
 
   async getSoftwareList(filters?: {
@@ -57,10 +75,7 @@ export const softwareApi = {
   }) {
     let query = supabase
       .from('softwares')
-      .select(`
-        *,
-        profiles!softwares_developer_id_fkey(username, avatar_url)
-      `)
+      .select('*')
       .eq('is_archived', false);
 
     if (filters?.category) {
@@ -89,16 +104,33 @@ export const softwareApi = {
       console.error('API error:', error);
       throw error;
     }
+
+    // Fetch profiles for all softwares
+    if (data && data.length > 0) {
+      const developerIds = [...new Set(data.map(s => s.developer_id))];
+      const { data: profiles } = await supabase
+        .from('profiles')
+        .select('id, username, avatar_url')
+        .in('id', developerIds);
+
+      const profilesMap = new Map(profiles?.map(p => [p.id, p]) || []);
+      
+      return data.map(software => ({
+        ...software,
+        profiles: profilesMap.get(software.developer_id) ? {
+          username: profilesMap.get(software.developer_id)!.username,
+          avatar_url: profilesMap.get(software.developer_id)!.avatar_url
+        } : undefined
+      })) as Software[];
+    }
+    
     return data as Software[];
   },
 
   async getSoftwareById(id: string) {
     const { data, error } = await supabase
       .from('softwares')
-      .select(`
-        *,
-        profiles!softwares_developer_id_fkey(username, avatar_url)
-      `)
+      .select('*')
       .eq('id', id)
       .single();
 
@@ -106,7 +138,15 @@ export const softwareApi = {
       console.error('API error:', error);
       throw error;
     }
-    return data as Software;
+
+    // Fetch profile separately
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('username, avatar_url')
+      .eq('id', data.developer_id)
+      .single();
+
+    return { ...data, profiles: profile } as Software;
   },
 
   async updateSoftware(id: string, updates: UpdateSoftwareData) {
@@ -114,17 +154,22 @@ export const softwareApi = {
       .from('softwares')
       .update(updates)
       .eq('id', id)
-      .select(`
-        *,
-        profiles!softwares_developer_id_fkey(username, avatar_url)
-      `)
+      .select('*')
       .single();
 
     if (error) {
       console.error('API error:', error);
       throw error;
     }
-    return data as Software;
+
+    // Fetch profile separately
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('username, avatar_url')
+      .eq('id', data.developer_id)
+      .single();
+
+    return { ...data, profiles: profile } as Software;
   },
 
   async archiveSoftware(id: string) {
@@ -168,10 +213,7 @@ export const softwareApi = {
 
     const { data, error } = await supabase
       .from('softwares')
-      .select(`
-        *,
-        profiles!softwares_developer_id_fkey(username, avatar_url)
-      `)
+      .select('*')
       .eq('developer_id', profile.id)
       .order('created_at', { ascending: false });
 
@@ -179,7 +221,18 @@ export const softwareApi = {
       console.error('API error:', error);
       throw error;
     }
-    return data as Software[];
+
+    // Add profile info to each software
+    const { data: devProfile } = await supabase
+      .from('profiles')
+      .select('username, avatar_url')
+      .eq('id', profile.id)
+      .single();
+
+    return data.map(software => ({
+      ...software,
+      profiles: devProfile
+    })) as Software[];
   },
 
   async getCategories() {
