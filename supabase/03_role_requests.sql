@@ -32,10 +32,14 @@
 
   -- 사용자는 자신의 요청만 조회/생성 가능
   CREATE POLICY "Users can view own role requests" ON public.role_requests
-    FOR SELECT USING (user_id = (SELECT id FROM public.profiles WHERE user_id = auth.uid()));
+    FOR SELECT USING (
+      user_id IN (SELECT id FROM public.profiles WHERE user_id = auth.uid())
+    );
 
   CREATE POLICY "Users can create own role requests" ON public.role_requests
-    FOR INSERT WITH CHECK (user_id = (SELECT id FROM public.profiles WHERE user_id = auth.uid()));
+    FOR INSERT WITH CHECK (
+      user_id IN (SELECT id FROM public.profiles WHERE user_id = auth.uid())
+    );
 
   -- 관리자는 모든 요청 조회/수정 가능
   CREATE POLICY "Admins can view all role requests" ON public.role_requests

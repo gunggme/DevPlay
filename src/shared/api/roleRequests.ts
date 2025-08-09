@@ -27,12 +27,29 @@ export const roleRequestsApi = {
     requested_role: 'developer' | 'admin';
     reason?: string;
   }) {
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user?.id) {
+      throw new Error('User not authenticated');
+    }
+
+    // Get the profile.id that corresponds to this auth user
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('user_id', user.id)
+      .single();
+
+    if (profileError || !profile) {
+      throw new Error('Profile not found');
+    }
+
     const { data: result, error } = await supabase
       .from('role_requests')
       .insert({
         requested_role: data.requested_role,
         reason: data.reason,
-        user_id: supabase.auth.getUser().then(r => r.data.user?.id)
+        user_id: profile.id
       })
       .select()
       .single();
