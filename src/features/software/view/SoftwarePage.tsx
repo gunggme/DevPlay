@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useAppSelector } from '@/app/providers/store';
 import { useSoftwareList, useArchiveSoftware, useDeleteSoftware, useCategories } from '@/shared/hooks/useSoftware';
 import { Button } from '@/shared/ui/Button';
 import { SoftwareFormModal } from './SoftwareFormModal';
 import type { Software } from '@/shared/api/software';
+import { useAppSelector } from '@/store/hooks';
+import { useState } from 'react';
 
 export function SoftwarePage() {
   const { profile } = useAppSelector((state) => state.auth);

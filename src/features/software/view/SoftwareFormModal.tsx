@@ -106,7 +106,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1">
             소프트웨어 이름 *
           </label>
           <input
@@ -115,13 +115,13 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.name}
             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
             placeholder="소프트웨어 이름을 입력하세요"
           />
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="description" className="block text-sm font-medium text-foreground mb-1">
             설명 *
           </label>
           <textarea
@@ -129,14 +129,14 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.description}
             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
             rows={3}
             placeholder="소프트웨어에 대한 설명을 입력하세요"
           />
         </div>
 
         <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="category" className="block text-sm font-medium text-foreground mb-1">
             카테고리 *
           </label>
           <select
@@ -144,7 +144,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.category}
             onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
           >
             <option value="">카테고리를 선택하세요</option>
             <option value="개발도구">개발도구</option>
@@ -164,7 +164,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
         </div>
 
         <div>
-          <label htmlFor="download_url" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="download_url" className="block text-sm font-medium text-foreground mb-1">
             다운로드 URL *
           </label>
           <input
@@ -173,13 +173,13 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.download_url}
             onChange={(e) => setFormData(prev => ({ ...prev, download_url: e.target.value }))}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
             placeholder="https://example.com/download"
           />
         </div>
 
         <div>
-          <label htmlFor="github_url" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="github_url" className="block text-sm font-medium text-foreground mb-1">
             GitHub URL (선택사항)
           </label>
           <input
@@ -187,13 +187,13 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             id="github_url"
             value={formData.github_url}
             onChange={(e) => setFormData(prev => ({ ...prev, github_url: e.target.value }))}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
             placeholder="https://github.com/username/repo"
           />
         </div>
 
         <div>
-          <label htmlFor="image_url" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="image_url" className="block text-sm font-medium text-foreground mb-1">
             이미지 URL (선택사항)
           </label>
           <input
@@ -201,14 +201,14 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             id="image_url"
             value={formData.image_url}
             onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
             placeholder="https://example.com/image.png"
           />
         </div>
 
         {/* 태그 입력 */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-foreground mb-1">
             태그 (선택사항)
           </label>
           <div className="flex space-x-2 mb-2">
@@ -217,7 +217,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
               value={newTag}
               onChange={(e) => setNewTag(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
-              className="flex-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="flex-1 p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
               placeholder="태그를 입력하세요"
             />
             <Button
@@ -236,13 +236,13 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
               {formData.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center px-2 py-1 rounded-full text-sm bg-blue-100 text-blue-800"
+                  className="inline-flex items-center px-2 py-1 rounded-full text-sm bg-primary/20 text-primary"
                 >
                   {tag}
                   <button
                     type="button"
                     onClick={() => handleRemoveTag(tag)}
-                    className="ml-1 text-blue-600 hover:text-blue-800"
+                    className="ml-1 text-primary hover:text-primary/80"
                   >
                     ×
                   </button>
@@ -254,7 +254,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
           {/* 인기 태그 */}
           {popularTags && popularTags.length > 0 && (
             <div>
-              <p className="text-xs text-gray-500 mb-1">인기 태그:</p>
+              <p className="text-xs text-muted-foreground mb-1">인기 태그:</p>
               <div className="flex flex-wrap gap-1">
                 {popularTags.map((tag) => (
                   <button
@@ -263,8 +263,8 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
                     onClick={() => handlePopularTagClick(tag)}
                     className={`px-2 py-1 rounded text-xs transition-colors ${
                       formData.tags?.includes(tag)
-                        ? 'bg-blue-500 text-white cursor-not-allowed'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        ? 'bg-primary text-primary-foreground cursor-not-allowed'
+                        : 'bg-muted text-muted-foreground hover:bg-muted/80'
                     }`}
                     disabled={formData.tags?.includes(tag)}
                   >

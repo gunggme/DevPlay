@@ -100,9 +100,9 @@ export function NicknameModal({ isOpen, userId }: NicknameModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
       <div className="relative w-full max-w-md mx-4">
-        <div className="bg-background rounded-lg shadow-xl border border-border p-6">
+        <div className="bg-card rounded-lg shadow-xl border border-border p-6">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-foreground mb-2">
+            <h2 className="text-2xl font-bold text-card-foreground mb-2">
               환영합니다! 🎉
             </h2>
             <p className="text-muted-foreground">
@@ -122,7 +122,6 @@ export function NicknameModal({ isOpen, userId }: NicknameModalProps) {
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="2-20자 사이로 입력해주세요"
                 className="w-full px-3 py-2 border border-input bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                style={{ color: 'black' }}
                 disabled={isLoading}
                 autoFocus
                 required

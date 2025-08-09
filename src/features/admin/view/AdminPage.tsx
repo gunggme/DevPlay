@@ -15,7 +15,7 @@ export function AdminPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto text-center">
-          <p className="text-red-600">관리자 권한이 필요합니다.</p>
+          <p className="text-destructive">관리자 권한이 필요합니다.</p>
         </div>
       </div>
     );
@@ -58,23 +58,23 @@ export function AdminPage() {
         <h1 className="text-3xl font-bold mb-8">관리자 대시보드</h1>
         
         {/* 역할 요청 승인 섹션 */}
-        <div className="bg-white rounded-lg border p-6">
-          <h2 className="text-xl font-semibold mb-4">
+        <div className="bg-card rounded-lg border p-6">
+          <h2 className="text-xl font-semibold mb-4 text-card-foreground">
             대기 중인 역할 요청 ({pendingRequests?.length || 0})
           </h2>
           
           {!pendingRequests || pendingRequests.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-gray-500">대기 중인 역할 요청이 없습니다.</p>
+              <p className="text-muted-foreground">대기 중인 역할 요청이 없습니다.</p>
             </div>
           ) : (
             <div className="space-y-4">
               {pendingRequests.map((request) => (
-                <div key={request.id} className="border rounded-lg p-4">
+                <div key={request.id} className="border rounded-lg p-4 bg-background">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <div className="flex items-center space-x-3 mb-2">
-                        <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                        <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
                           {request.user_profile?.avatar_url ? (
                             <img
                               src={request.user_profile.avatar_url}
@@ -82,49 +82,49 @@ export function AdminPage() {
                               className="w-full h-full rounded-full object-cover"
                             />
                           ) : (
-                            <span className="text-sm font-semibold text-gray-500">
+                            <span className="text-sm font-semibold text-muted-foreground">
                               {request.user_profile?.username?.charAt(0).toUpperCase()}
                             </span>
                           )}
                         </div>
                         <div>
-                          <p className="font-medium">{request.user_profile?.username}</p>
-                          <p className="text-sm text-gray-600">
+                          <p className="font-medium text-foreground">{request.user_profile?.username}</p>
+                          <p className="text-sm text-muted-foreground">
                             {request.current_role} → {request.requested_role}
                           </p>
                         </div>
                       </div>
                       
                       {request.user_profile?.bio && (
-                        <p className="text-sm text-gray-700 mb-2">
+                        <p className="text-sm text-foreground mb-2">
                           소개: {request.user_profile.bio}
                         </p>
                       )}
                       
                       {request.reason && (
                         <div className="mb-3">
-                          <p className="text-sm font-medium text-gray-800 mb-1">요청 사유:</p>
-                          <p className="text-sm text-gray-700 bg-gray-50 p-2 rounded">
+                          <p className="text-sm font-medium text-foreground mb-1">요청 사유:</p>
+                          <p className="text-sm text-foreground bg-muted p-2 rounded">
                             {request.reason}
                           </p>
                         </div>
                       )}
                       
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-muted-foreground">
                         요청일: {new Date(request.created_at).toLocaleDateString('ko-KR')}
                       </p>
                     </div>
                     
                     <div>
                       <div className="mb-3">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-foreground mb-2">
                           관리자 메모 (선택사항)
                         </label>
                         <textarea
                           value={adminNotes[request.id] || ''}
                           onChange={(e) => updateAdminNotes(request.id, e.target.value)}
                           placeholder="승인/거절 사유나 추가 메모를 입력하세요"
-                          className="w-full p-2 border border-gray-300 rounded-md resize-none text-sm"
+                          className="w-full p-2 border border-input bg-background text-foreground rounded-md resize-none text-sm"
                           rows={3}
                         />
                       </div>

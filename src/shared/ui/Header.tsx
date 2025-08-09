@@ -5,6 +5,7 @@ import { signOut } from '@/features/auth/model/authSlice';
 import { Bell, User, Code2, Home, MessageSquare, Settings } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { LoginModal } from '@/features/auth/view/LoginModal';
+import { ThemeToggle } from './ThemeToggle';
 
 export function Header() {
   const navigate = useNavigate();
@@ -104,6 +105,7 @@ export function Header() {
             </div>
 
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               {user ? (
                 <>
                   <button className="relative p-2 hover:bg-accent rounded-md">

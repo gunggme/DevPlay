@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/app/providers/store';
+import { useAppSelector } from '@/store';
 import { useCreateRoleRequest, useUserRoleRequests } from '@/shared/hooks/useRoleRequests';
 import { Button } from '@/shared/ui/Button';
 import { useState } from 'react';
@@ -37,9 +37,9 @@ export function ProfilePage() {
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">프로필</h1>
         
-        <div className="bg-white rounded-lg border p-6 mb-6">
+        <div className="bg-card rounded-lg border p-6 mb-6">
           <div className="flex items-center space-x-4 mb-4">
-            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+            <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center">
               {profile.avatar_url ? (
                 <img
                   src={profile.avatar_url}
@@ -47,24 +47,24 @@ export function ProfilePage() {
                   className="w-full h-full rounded-full object-cover"
                 />
               ) : (
-                <span className="text-2xl font-semibold text-gray-500">
-                  {profile.username.charAt(0).toUpperCase()}
+                <span className="text-2xl font-semibold text-muted-foreground">
+                  {profile.username?.charAt(0).toUpperCase() || ''}
                 </span>
               )}
             </div>
             <div>
-              <h2 className="text-xl font-semibold">{profile.username}</h2>
-              <p className="text-gray-600 capitalize">{profile.role}</p>
+              <h2 className="text-xl font-semibold text-card-foreground">{profile.username}</h2>
+              <p className="text-muted-foreground capitalize">{profile.role}</p>
               {profile.bio && (
-                <p className="text-gray-700 mt-1">{profile.bio}</p>
+                <p className="text-card-foreground mt-1">{profile.bio}</p>
               )}
             </div>
           </div>
         </div>
 
         {/* 역할 요청 섹션 */}
-        <div className="bg-white rounded-lg border p-6">
-          <h3 className="text-lg font-semibold mb-4">역할 관리</h3>
+        <div className="bg-card rounded-lg border p-6">
+          <h3 className="text-lg font-semibold mb-4 text-card-foreground">역할 관리</h3>
           
           {profile.role === 'user' && (
             <div className="mb-6">
@@ -79,12 +79,12 @@ export function ProfilePage() {
 
               {showRequestForm && (
                 <div className="border rounded-lg p-4 mb-4">
-                  <h4 className="font-medium mb-3">개발자 권한 요청</h4>
+                  <h4 className="font-medium mb-3 text-card-foreground">개발자 권한 요청</h4>
                   <textarea
                     value={requestReason}
                     onChange={(e) => setRequestReason(e.target.value)}
                     placeholder="요청 사유를 입력해주세요 (선택사항)"
-                    className="w-full p-2 border border-gray-300 rounded-md resize-none"
+                    className="w-full p-2 border border-input bg-background text-foreground rounded-md resize-none"
                     rows={3}
                   />
                   <div className="flex space-x-2 mt-3">
@@ -108,7 +108,7 @@ export function ProfilePage() {
               )}
 
               {!canRequestDeveloper && (
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   이미 개발자 권한 요청이 진행 중입니다.
                 </p>
               )}
@@ -118,32 +118,32 @@ export function ProfilePage() {
           {/* 요청 히스토리 */}
           {roleRequests && roleRequests.length > 0 && (
             <div>
-              <h4 className="font-medium mb-3">요청 히스토리</h4>
+              <h4 className="font-medium mb-3 text-card-foreground">요청 히스토리</h4>
               <div className="space-y-2">
                 {roleRequests.map((request) => (
                   <div
                     key={request.id}
-                    className="flex justify-between items-center p-3 border rounded-lg"
+                    className="flex justify-between items-center p-3 border rounded-lg bg-background"
                   >
                     <div>
-                      <p className="font-medium">
+                      <p className="font-medium text-foreground">
                         {request.requested_role === 'developer' ? '개발자' : '관리자'} 권한 요청
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-muted-foreground">
                         {new Date(request.created_at).toLocaleDateString()}
                       </p>
                       {request.reason && (
-                        <p className="text-sm text-gray-700 mt-1">{request.reason}</p>
+                        <p className="text-sm text-foreground mt-1">{request.reason}</p>
                       )}
                     </div>
                     <div className="text-right">
                       <span
                         className={`inline-block px-2 py-1 rounded text-sm ${
                           request.status === 'pending'
-                            ? 'bg-yellow-100 text-yellow-800'
+                            ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
                             : request.status === 'approved'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-red-100 text-red-800'
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                            : 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
                         }`}
                       >
                         {request.status === 'pending'
@@ -153,7 +153,7 @@ export function ProfilePage() {
                           : '거절됨'}
                       </span>
                       {request.admin_notes && (
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-muted-foreground mt-1">
                           관리자 메모: {request.admin_notes}
                         </p>
                       )}

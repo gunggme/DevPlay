@@ -46,10 +46,10 @@ export function LoginModal({ onClose }: LoginModalProps) {
       className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
       onClick={handleBackdropClick}
     >
-      <div className="bg-background rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-card rounded-lg shadow-lg w-full max-w-md border border-border">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">DevPlay에 로그인</h2>
+            <h2 className="text-2xl font-bold text-card-foreground">DevPlay에 로그인</h2>
             <button
               onClick={onClose}
               className="text-muted-foreground hover:text-foreground p-1 hover:bg-muted rounded"
