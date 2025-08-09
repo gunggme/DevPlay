@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { initializeAuth, setSession, setProfile } from '@/features/auth/model/authSlice';
 import { supabase } from '@/shared/lib/supabase';
@@ -15,56 +15,80 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const profile = useAppSelector((state) => state.auth.profile);
   const [showNicknameModal, setShowNicknameModal] = useState(false);
   const [needsNickname, setNeedsNickname] = useState(false);
+  const [initTimeout, setInitTimeout] = useState(false);
+  
+  // useRef로 상태 관리하여 비동기 로직 중단 방지
+  const isInitializedRef = useRef(false);
+  const isCancelledRef = useRef(false);
+  const initializingRef = useRef(false);
 
   useEffect(() => {
-    const initAuth = async () => {
-      const result = await dispatch(initializeAuth()).unwrap();
-      
-      // 초기 로드 시 사용자는 있지만 프로필이 없는 경우
-      if (result.session?.user && !result.profile) {
-        setNeedsNickname(true);
-        setShowNicknameModal(true);
-      }
-    };
+    let isInitialized = false;
+    let isCancelled = false;
     
-    initAuth();
+    console.log('🔄 AuthProvider: Setting up auth state management...');
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        dispatch(setSession(session));
+    // 초기 세션 복원 로직 (새로고침 시 중요)
+    const initializeSession = async () => {
+      if (isInitialized || isCancelled) return;
+      
+      console.log('🎯 Initializing session on mount/refresh...');
+      isInitialized = true;
+      
+      try {
+        const result = await dispatch(initializeAuth()).unwrap();
+        console.log('✅ Session initialization completed:', result);
         
-        if (event === 'SIGNED_IN' && session?.user) {
-          // 프로필 확인
-          console.log('Checking profile for user:', session.user.id);
-          const { data: profile, error: profileError } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('user_id', session.user.id)
-            .maybeSingle(); // single() 대신 maybeSingle() 사용
-
-          if (profileError && profileError.code !== 'PGRST116') {
-            console.error('Error fetching profile:', profileError);
-          }
-
-          if (!profile) {
-            // 프로필이 없으면 닉네임 모달 표시
-            console.log('No profile found, showing nickname modal');
-            setNeedsNickname(true);
-            setShowNicknameModal(true);
-          } else {
-            console.log('Profile found:', profile);
-            dispatch(setProfile(profile));
-            setNeedsNickname(false);
-            setShowNicknameModal(false);
-          }
-        } else if (event === 'SIGNED_OUT') {
+        if (result.user && !result.profile) {
+          setNeedsNickname(true);
+          setShowNicknameModal(true);
+        } else if (result.user && result.profile) {
+          dispatch(setProfile(result.profile));
           setNeedsNickname(false);
           setShowNicknameModal(false);
         }
+      } catch (error) {
+        console.error('❌ Session initialization failed:', error);
+      }
+    };
+
+    // Auth state change listener (Supabase 공식 권장사항: async 작업을 setTimeout으로 분리)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        console.log('🔔 Auth state change:', { event, hasSession: !!session, userId: session?.user?.id });
+        if (isCancelled) return;
+        
+        // 즉시 세션 상태 업데이트 (동기)
+        dispatch(setSession(session));
+        
+        // 비동기 작업은 setTimeout으로 콜백 외부에서 실행 (데드락 방지)
+        setTimeout(async () => {
+          if (isCancelled) return;
+          
+          if (event === 'INITIAL_SESSION') {
+            console.log('🎯 INITIAL_SESSION event detected');
+            await initializeSession();
+          } else if (event === 'SIGNED_IN') {
+            console.log('🔑 SIGNED_IN event - user authenticated, reinitializing...');
+            isInitialized = false; // 새 로그인이므로 재초기화 허용
+            await initializeSession();
+          } else if (event === 'SIGNED_OUT') {
+            console.log('🚪 SIGNED_OUT event - clearing state');
+            dispatch(setProfile(null));
+            setNeedsNickname(false);
+            setShowNicknameModal(false);
+          } else if (event === 'TOKEN_REFRESHED') {
+            console.log('🔄 TOKEN_REFRESHED event - tokens updated');
+          }
+        }, 0);
       }
     );
 
+    // 즉시 초기화 실행 (새로고침 시 onAuthStateChange 이벤트를 기다리지 않음)
+    initializeSession();
+
     return () => {
+      isCancelled = true;
       subscription.unsubscribe();
     };
   }, [dispatch]);
@@ -77,10 +101,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [profile, showNicknameModal]);
 
-  if (isLoading) {
+  // 로딩 표시 - 사용자 상태가 아직 결정되지 않은 경우에만
+  if (isLoading && !user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        <div className="ml-4 text-muted-foreground">
+          인증 상태를 확인하는 중...
+        </div>
       </div>
     );
   }

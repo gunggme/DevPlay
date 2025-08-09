@@ -59,6 +59,63 @@ src/
 
 - **클라이언트 구성**: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` 환경 변수 사용. 서비스 롤 키는 프론트에 절대 노출 금지.
 - **보안(RLS)**: 모든 테이블 RLS 활성화 후 정책으로 접근 제어. 클라이언트 쿼리는 항상 명시 필터를 추가합니다(성능 최적화).
+
+#### 3.1) 🚨 Supabase 데드락 방지 필수 규칙
+
+**문제**: `onAuthStateChange` 콜백에서 `await`을 사용하면 Supabase 클라이언트가 데드락 상태에 빠져 모든 후속 호출이 응답하지 않음.
+
+**해결 규칙**:
+```typescript
+// ❌ 금지: 콜백에서 직접 await 사용
+supabase.auth.onAuthStateChange(async (event, session) => {
+  await supabase.from('profiles').select('*'); // 데드락 발생!
+});
+
+// ✅ 권장: setTimeout으로 비동기 작업 분리
+supabase.auth.onAuthStateChange((event, session) => {
+  // 즉시 실행할 동기 작업만
+  dispatch(setSession(session));
+  
+  // 비동기 작업은 setTimeout으로 콜백 외부에서 실행
+  setTimeout(async () => {
+    await supabase.from('profiles').select('*'); // 안전함
+  }, 0);
+});
+```
+
+**필수 준수 사항**:
+1. `onAuthStateChange` 콜백은 **절대 `async` 함수로 만들지 않음**
+2. 콜백 내에서는 **동기 작업만 수행** (Redux dispatch 등)
+3. 모든 Supabase API 호출은 **`setTimeout(() => {}, 0)`으로 래핑**
+4. `shared/lib/supabaseHelpers.ts`의 헬퍼 함수 사용 권장
+
+**헬퍼 함수 사용법**:
+```typescript
+import { useSupabaseAuth, safeAsyncInAuthCallback } from '@/shared/lib/supabaseHelpers';
+
+// React 컴포넌트에서
+function AuthProvider() {
+  useSupabaseAuth({
+    onSync: (event, session) => {
+      dispatch(setSession(session)); // 동기 작업
+    },
+    onAsync: async (event, session) => {
+      // 비동기 작업 안전하게 실행
+      await dispatch(initializeAuth()).unwrap();
+    }
+  });
+}
+
+// 또는 직접 사용
+supabase.auth.onAuthStateChange((event, session) => {
+  dispatch(setSession(session)); // 동기 작업
+  
+  safeAsyncInAuthCallback(async () => {
+    await supabase.from('profiles').select('*'); // 비동기 작업
+  });
+});
+```
+
 - **Windows용 MCP 설정(JSON 예시)**
 ```json
 {
