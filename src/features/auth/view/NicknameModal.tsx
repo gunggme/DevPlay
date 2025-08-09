@@ -75,8 +75,15 @@ export function NicknameModal({ isOpen, userId }: NicknameModalProps) {
       }
 
       if (profile) {
-        console.log('Profile created successfully:', profile);
+        console.log('✅ Profile created successfully:', {
+          id: profile.id,
+          user_id: profile.user_id,
+          username: profile.username,
+          role: profile.role,
+          fullProfile: profile
+        });
         dispatch(setProfile(profile));
+        console.log('✅ Profile dispatched to Redux');
       }
     } catch (err: any) {
       console.error('Nickname modal error:', err);
