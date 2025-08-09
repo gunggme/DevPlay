@@ -20,7 +20,8 @@
       "mcp__ide__getDiagnostics",
       "Bash(git commit:*)",
       "mcp__Ref__ref_search_documentation",
-      "mcp__Ref__ref_read_url"
+      "mcp__Ref__ref_read_url",
+      "Bash(npx supabase:*)"
     ],
     "deny": []
   }

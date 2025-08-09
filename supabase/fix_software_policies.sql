@@ -38,7 +38,7 @@ CREATE POLICY "Software owners can update"
     developer_id IN (
       SELECT id FROM public.profiles 
       WHERE user_id = auth.uid()
-    )
+    ) 
   );
 
 -- Software owners can delete their own software

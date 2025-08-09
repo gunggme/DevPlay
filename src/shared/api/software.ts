@@ -13,7 +13,7 @@ export interface Software {
   is_archived: boolean;
   created_at: string;
   updated_at: string;
-  developer?: {
+  profiles?: {
     username: string;
     avatar_url?: string;
   };
@@ -38,7 +38,7 @@ export const softwareApi = {
       .insert([data])
       .select(`
         *,
-        developer:profiles!developer_id(username, avatar_url)
+        profiles!softwares_developer_id_fkey(username, avatar_url)
       `)
       .single();
 
@@ -59,7 +59,7 @@ export const softwareApi = {
       .from('softwares')
       .select(`
         *,
-        developer:profiles!developer_id(username, avatar_url)
+        profiles!softwares_developer_id_fkey(username, avatar_url)
       `)
       .eq('is_archived', false);
 
@@ -97,7 +97,7 @@ export const softwareApi = {
       .from('softwares')
       .select(`
         *,
-        developer:profiles!developer_id(username, avatar_url)
+        profiles!softwares_developer_id_fkey(username, avatar_url)
       `)
       .eq('id', id)
       .single();
@@ -116,7 +116,7 @@ export const softwareApi = {
       .eq('id', id)
       .select(`
         *,
-        developer:profiles!developer_id(username, avatar_url)
+        profiles!softwares_developer_id_fkey(username, avatar_url)
       `)
       .single();
 
@@ -170,7 +170,7 @@ export const softwareApi = {
       .from('softwares')
       .select(`
         *,
-        developer:profiles!developer_id(username, avatar_url)
+        profiles!softwares_developer_id_fkey(username, avatar_url)
       `)
       .eq('developer_id', profile.id)
       .order('created_at', { ascending: false });

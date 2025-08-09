@@ -133,20 +133,20 @@ export function SoftwarePage() {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-2">
                       <div className="w-6 h-6 bg-muted rounded-full flex items-center justify-center">
-                        {software.developer?.avatar_url ? (
+                        {software.profiles?.avatar_url ? (
                           <img
-                            src={software.developer.avatar_url}
-                            alt={software.developer.username}
+                            src={software.profiles.avatar_url}
+                            alt={software.profiles.username}
                             className="w-full h-full rounded-full object-cover"
                           />
                         ) : (
                           <span className="text-xs font-semibold text-muted-foreground">
-                            {software.developer?.username?.charAt(0).toUpperCase()}
+                            {software.profiles?.username?.charAt(0).toUpperCase()}
                           </span>
                         )}
                       </div>
                       <span className="text-xs text-muted-foreground">
-                        {software.developer?.username}
+                        {software.profiles?.username}
                       </span>
                     </div>
                     <span className="text-xs text-muted-foreground">

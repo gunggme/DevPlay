@@ -66,15 +66,43 @@ export function ProfilePage() {
         <div className="bg-card rounded-lg border p-6">
           <h3 className="text-lg font-semibold mb-4 text-card-foreground">역할 관리</h3>
           
+          {/* 역할별 메시지 */}
+          {profile.role === 'admin' && (
+            <div className="mb-6">
+              <div className="flex items-center space-x-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <p className="text-blue-700 dark:text-blue-300 font-medium">
+                  관리자 권한을 보유하고 있습니다.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {profile.role === 'developer' && (
+            <div className="mb-6">
+              <div className="flex items-center space-x-2 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <p className="text-green-700 dark:text-green-300 font-medium">
+                  개발자 권한을 보유하고 있습니다. 소프트웨어를 등록하고 관리할 수 있습니다.
+                </p>
+              </div>
+            </div>
+          )}
+
           {profile.role === 'user' && (
             <div className="mb-6">
               {canRequestDeveloper && !showRequestForm && (
-                <Button
-                  onClick={() => setShowRequestForm(true)}
-                  className="mb-4"
-                >
-                  개발자 권한 요청
-                </Button>
+                <div>
+                  <p className="text-muted-foreground mb-3">
+                    개발자 권한을 요청하여 소프트웨어를 등록하고 관리할 수 있습니다.
+                  </p>
+                  <Button
+                    onClick={() => setShowRequestForm(true)}
+                    className="mb-4"
+                  >
+                    개발자 권한 요청
+                  </Button>
+                </div>
               )}
 
               {showRequestForm && (
@@ -97,7 +125,7 @@ export function ProfilePage() {
                     <Button
                       variant="secondary"
                       onClick={() => {
-                        setShowRequestForm(false);
+                        setShowRequestForm(false); 
                         setRequestReason('');
                       }}
                     >
@@ -107,13 +135,15 @@ export function ProfilePage() {
                 </div>
               )}
 
-              {!canRequestDeveloper && (
-                <p className="text-muted-foreground">
-                  이미 개발자 권한 요청이 진행 중입니다.
-                </p>
+              {!canRequestDeveloper && ( 
+                <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                  <p className="text-yellow-700 dark:text-yellow-300">
+                    개발자 권한 요청이 진행 중입니다. 관리자의 승인을 기다려주세요.
+                  </p>
+                </div>
               )}
             </div>
-          )}
+          )} 
 
           {/* 요청 히스토리 */}
           {roleRequests && roleRequests.length > 0 && (
