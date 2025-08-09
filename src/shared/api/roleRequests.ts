@@ -1,0 +1,125 @@
+import { supabase } from '../lib/supabase';
+
+export interface RoleRequest {
+  id: string;
+  user_id: string;
+  requested_role: 'developer' | 'admin';
+  current_role: string;
+  status: 'pending' | 'approved' | 'rejected';
+  reason?: string;
+  admin_notes?: string;
+  reviewed_by?: string;
+  reviewed_at?: string;
+  created_at: string;
+  updated_at: string;
+  user_profile?: {
+    username: string;
+    bio?: string;
+    avatar_url?: string;
+  };
+  reviewer_profile?: {
+    username: string;
+  };
+}
+
+export const roleRequestsApi = {
+  async createRoleRequest(data: {
+    requested_role: 'developer' | 'admin';
+    reason?: string;
+  }) {
+    const { data: result, error } = await supabase
+      .from('role_requests')
+      .insert({
+        requested_role: data.requested_role,
+        reason: data.reason,
+        user_id: supabase.auth.getUser().then(r => r.data.user?.id)
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return result;
+  },
+
+  async getUserRoleRequests() {
+    const { data, error } = await supabase
+      .from('role_requests')
+      .select(`
+        *,
+        reviewer_profile:reviewed_by(username)
+      `)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data as RoleRequest[];
+  },
+
+  async getAllRoleRequests() {
+    const { data, error } = await supabase
+      .from('role_requests')
+      .select(`
+        *,
+        user_profile:user_id(username, bio, avatar_url),
+        reviewer_profile:reviewed_by(username)
+      `)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data as RoleRequest[];
+  },
+
+  async getPendingRoleRequests() {
+    const { data, error } = await supabase
+      .from('role_requests')
+      .select(`
+        *,
+        user_profile:user_id(username, bio, avatar_url)
+      `)
+      .eq('status', 'pending')
+      .order('created_at', { ascending: true });
+
+    if (error) throw error;
+    return data as RoleRequest[];
+  },
+
+  async approveRoleRequest(requestId: string, adminNotes?: string) {
+    const { data, error } = await supabase
+      .from('role_requests')
+      .update({
+        status: 'approved',
+        admin_notes: adminNotes,
+        reviewed_at: new Date().toISOString()
+      })
+      .eq('id', requestId)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  async rejectRoleRequest(requestId: string, adminNotes?: string) {
+    const { data, error } = await supabase
+      .from('role_requests')
+      .update({
+        status: 'rejected',
+        admin_notes: adminNotes,
+        reviewed_at: new Date().toISOString()
+      })
+      .eq('id', requestId)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  async cancelRoleRequest(requestId: string) {
+    const { error } = await supabase
+      .from('role_requests')
+      .delete()
+      .eq('id', requestId);
+
+    if (error) throw error;
+  }
+};
