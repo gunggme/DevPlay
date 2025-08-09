@@ -14,7 +14,7 @@ export function AdminPage() {
   if (profile?.role !== 'admin') {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="mx-auto max-w-6xl text-center">
           <p className="text-destructive">관리자 권한이 필요합니다.</p>
         </div>
       </div>
@@ -44,8 +44,8 @@ export function AdminPage() {
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">관리자 대시보드</h1>
+        <div className="mx-auto max-w-6xl">
+          <h1 className="mb-8 text-3xl font-bold">관리자 대시보드</h1>
           <p>로딩 중...</p>
         </div>
       </div>
@@ -54,32 +54,32 @@ export function AdminPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">관리자 대시보드</h1>
+      <div className="mx-auto max-w-6xl">
+        <h1 className="mb-8 text-3xl font-bold">관리자 대시보드</h1>
         
         {/* 역할 요청 승인 섹션 */}
-        <div className="bg-card rounded-lg border p-6">
-          <h2 className="text-xl font-semibold mb-4 text-card-foreground">
+        <div className="rounded-lg border bg-card p-6">
+          <h2 className="mb-4 text-xl font-semibold text-card-foreground">
             대기 중인 역할 요청 ({pendingRequests?.length || 0})
           </h2>
           
           {!pendingRequests || pendingRequests.length === 0 ? (
-            <div className="text-center py-8">
+            <div className="py-8 text-center">
               <p className="text-muted-foreground">대기 중인 역할 요청이 없습니다.</p>
             </div>
           ) : (
             <div className="space-y-4">
               {pendingRequests.map((request) => (
-                <div key={request.id} className="border rounded-lg p-4 bg-background">
-                  <div className="grid md:grid-cols-2 gap-4">
+                <div key={request.id} className="rounded-lg border bg-background p-4">
+                  <div className="grid gap-4 md:grid-cols-2">
                     <div>
-                      <div className="flex items-center space-x-3 mb-2">
-                        <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                      <div className="mb-2 flex items-center space-x-3">
+                        <div className="flex size-10 items-center justify-center rounded-full bg-muted">
                           {request.user_profile?.avatar_url ? (
                             <img
                               src={request.user_profile.avatar_url}
                               alt={request.user_profile.username}
-                              className="w-full h-full rounded-full object-cover"
+                              className="size-full rounded-full object-cover"
                             />
                           ) : (
                             <span className="text-sm font-semibold text-muted-foreground">
@@ -96,15 +96,15 @@ export function AdminPage() {
                       </div>
                       
                       {request.user_profile?.bio && (
-                        <p className="text-sm text-foreground mb-2">
+                        <p className="mb-2 text-sm text-foreground">
                           소개: {request.user_profile.bio}
                         </p>
                       )}
                       
                       {request.reason && (
                         <div className="mb-3">
-                          <p className="text-sm font-medium text-foreground mb-1">요청 사유:</p>
-                          <p className="text-sm text-foreground bg-muted p-2 rounded">
+                          <p className="mb-1 text-sm font-medium text-foreground">요청 사유:</p>
+                          <p className="rounded bg-muted p-2 text-sm text-foreground">
                             {request.reason}
                           </p>
                         </div>
@@ -117,14 +117,14 @@ export function AdminPage() {
                     
                     <div>
                       <div className="mb-3">
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label className="mb-2 block text-sm font-medium text-foreground">
                           관리자 메모 (선택사항)
                         </label>
                         <textarea
                           value={adminNotes[request.id] || ''}
                           onChange={(e) => updateAdminNotes(request.id, e.target.value)}
                           placeholder="승인/거절 사유나 추가 메모를 입력하세요"
-                          className="w-full p-2 border border-input bg-background text-foreground rounded-md resize-none text-sm"
+                          className="w-full resize-none rounded-md border border-input bg-background p-2 text-sm text-foreground"
                           rows={3}
                         />
                       </div>
@@ -142,7 +142,7 @@ export function AdminPage() {
                           onClick={() => handleReject(request.id)}
                           disabled={approveRequest.isPending || rejectRequest.isPending}
                           variant="secondary"
-                          className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                          className="flex-1 bg-red-600 text-white hover:bg-red-700"
                           size="sm"
                         >
                           {rejectRequest.isPending ? '거절 중...' : '거절'}

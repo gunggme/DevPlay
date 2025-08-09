@@ -99,10 +99,10 @@ export function NicknameModal({ isOpen, userId }: NicknameModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="relative w-full max-w-md mx-4">
-        <div className="bg-card rounded-lg shadow-xl border border-border p-6">
+      <div className="relative mx-4 w-full max-w-md">
+        <div className="rounded-lg border border-border bg-card p-6 shadow-xl">
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-card-foreground mb-2">
+            <h2 className="mb-2 text-2xl font-bold text-card-foreground">
               환영합니다! 🎉
             </h2>
             <p className="text-muted-foreground">
@@ -112,7 +112,7 @@ export function NicknameModal({ isOpen, userId }: NicknameModalProps) {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="nickname" className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="nickname" className="mb-2 block text-sm font-medium text-foreground">
                 닉네임
               </label>
               <input
@@ -121,7 +121,7 @@ export function NicknameModal({ isOpen, userId }: NicknameModalProps) {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="2-20자 사이로 입력해주세요"
-                className="w-full px-3 py-2 border border-input bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-foreground focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
                 disabled={isLoading}
                 autoFocus
                 required
@@ -134,7 +134,7 @@ export function NicknameModal({ isOpen, userId }: NicknameModalProps) {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full rounded-md bg-primary px-4 py-2 text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isLoading ? '설정 중...' : '시작하기'}
             </button>

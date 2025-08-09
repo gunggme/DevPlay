@@ -104,8 +104,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // 로딩 표시 - 사용자 상태가 아직 결정되지 않은 경우에만
   if (isLoading && !user) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="size-8 animate-spin rounded-full border-b-2 border-primary"></div>
         <div className="ml-4 text-muted-foreground">
           인증 상태를 확인하는 중...
         </div>

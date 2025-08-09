@@ -54,29 +54,29 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
       />
       
       <div 
-        className={`relative bg-card rounded-lg shadow-xl w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden border border-border`}
+        className={`relative w-full rounded-lg bg-card shadow-xl ${sizeClasses[size]} max-h-[90vh] overflow-hidden border border-border`}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? "modal-title" : undefined}
       >
         {title && (
-          <div className="flex items-center justify-between p-4 border-b">
+          <div className="flex items-center justify-between border-b p-4">
             <h2 id="modal-title" className="text-lg font-semibold text-card-foreground">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground transition-colors hover:text-foreground"
               aria-label="모달 닫기"
             >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
         )}
         
-        <div className="p-4 overflow-y-auto max-h-[calc(90vh-8rem)]">
+        <div className="max-h-[calc(90vh-8rem)] overflow-y-auto p-4">
           {children}
         </div>
       </div>

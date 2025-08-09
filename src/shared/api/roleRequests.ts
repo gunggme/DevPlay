@@ -1,3 +1,4 @@
+import { apiClient } from './client';
 import { supabase } from '../lib/supabase';
 
 export interface RoleRequest {
@@ -26,77 +27,46 @@ export const roleRequestsApi = {
   async createRoleRequest(data: {
     requested_role: 'developer' | 'admin';
     reason?: string;
-  }) {
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    if (!user?.id) {
-      throw new Error('User not authenticated');
-    }
+  }): Promise<RoleRequest> {
+    const { profile } = await apiClient.getCurrentUser();
 
-    // Get the profile.id that corresponds to this auth user
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('user_id', user.id)
-      .single();
-
-    if (profileError || !profile) {
-      throw new Error('Profile not found');
-    }
-
-    const { data: result, error } = await supabase
-      .from('role_requests')
-      .insert({
-        requested_role: data.requested_role,
-        reason: data.reason,
-        user_id: profile.id
-      })
-      .select()
-      .single();
-
-    if (error) throw error;
-    return result;
+    return apiClient.insert<RoleRequest>('role_requests', {
+      requested_role: data.requested_role,
+      reason: data.reason,
+      user_id: profile.id
+    });
   },
 
-  async getUserRoleRequests() {
-    const { data, error } = await supabase
-      .from('role_requests')
-      .select(`
+  async getUserRoleRequests(): Promise<RoleRequest[]> {
+    return apiClient.get<RoleRequest[]>('role_requests', {
+      select: `
         *,
         reviewer_profile:reviewed_by(username)
-      `)
-      .order('created_at', { ascending: false });
-
-    if (error) throw error;
-    return data as RoleRequest[];
+      `,
+      order: { column: 'created_at', ascending: false }
+    });
   },
 
-  async getAllRoleRequests() {
-    const { data, error } = await supabase
-      .from('role_requests')
-      .select(`
+  async getAllRoleRequests(): Promise<RoleRequest[]> {
+    return apiClient.get<RoleRequest[]>('role_requests', {
+      select: `
         *,
         user_profile:user_id(username, bio, avatar_url),
         reviewer_profile:reviewed_by(username)
-      `)
-      .order('created_at', { ascending: false });
-
-    if (error) throw error;
-    return data as RoleRequest[];
+      `,
+      order: { column: 'created_at', ascending: false }
+    });
   },
 
-  async getPendingRoleRequests() {
-    const { data, error } = await supabase
-      .from('role_requests')
-      .select(`
+  async getPendingRoleRequests(): Promise<RoleRequest[]> {
+    return apiClient.get<RoleRequest[]>('role_requests', {
+      select: `
         *,
         user_profile:user_id(username, bio, avatar_url)
-      `)
-      .eq('status', 'pending')
-      .order('created_at', { ascending: true });
-
-    if (error) throw error;
-    return data as RoleRequest[];
+      `,
+      eq: { status: 'pending' },
+      order: { column: 'created_at', ascending: true }
+    });
   },
 
   async approveRoleRequest(requestId: string, adminNotes?: string) {

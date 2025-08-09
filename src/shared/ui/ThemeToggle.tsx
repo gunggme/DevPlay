@@ -24,24 +24,24 @@ export function ThemeToggle() {
   }, [isOpen]);
 
   const currentIcon = theme === 'dark' ? (
-    <Moon className="h-5 w-5" />
+    <Moon className="size-5" />
   ) : theme === 'light' ? (
-    <Sun className="h-5 w-5" />
+    <Sun className="size-5" />
   ) : (
-    <Monitor className="h-5 w-5" />
+    <Monitor className="size-5" />
   );
 
   const themes = [
-    { value: 'light', label: '라이트', icon: <Sun className="h-4 w-4" /> },
-    { value: 'dark', label: '다크', icon: <Moon className="h-4 w-4" /> },
-    { value: 'system', label: '시스템', icon: <Monitor className="h-4 w-4" /> },
+    { value: 'light', label: '라이트', icon: <Sun className="size-4" /> },
+    { value: 'dark', label: '다크', icon: <Moon className="size-4" /> },
+    { value: 'system', label: '시스템', icon: <Monitor className="size-4" /> },
   ] as const;
 
   return (
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative rounded-lg p-2 hover:bg-accent transition-colors"
+        className="relative rounded-lg p-2 transition-colors hover:bg-accent"
         aria-label="테마 변경"
       >
         {currentIcon}
@@ -56,7 +56,7 @@ export function ThemeToggle() {
                 setTheme(t.value);
                 setIsOpen(false);
               }}
-              className={`flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent transition-colors ${
+              className={`flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent ${
                 theme === t.value ? 'bg-accent' : ''
               }`}
             >
@@ -64,7 +64,7 @@ export function ThemeToggle() {
               <span>{t.label}</span>
               {theme === t.value && (
                 <svg
-                  className="ml-auto h-4 w-4"
+                  className="ml-auto size-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

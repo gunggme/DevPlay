@@ -93,3 +93,54 @@ export interface Notification {
   read_at?: string;
   created_at: string;
 }
+
+// API Response Types
+export interface ApiResponse<T = unknown> {
+  data: T;
+  message?: string;
+  status: 'success' | 'error';
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+// Error Types
+export interface ApiError {
+  message: string;
+  code?: string;
+  status?: number;
+  details?: unknown;
+}
+
+export interface ValidationError {
+  field: string;
+  message: string;
+  code?: string;
+}
+
+// Form Types
+export interface FormState {
+  isLoading: boolean;
+  errors: Record<string, string>;
+  isDirty: boolean;
+  isValid: boolean;
+}
+
+// Component Props Types
+export interface BaseComponentProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export interface PageProps {
+  title?: string;
+  description?: string;
+  breadcrumbs?: Array<{ label: string; href?: string }>;
+}

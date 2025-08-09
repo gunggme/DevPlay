@@ -4,7 +4,7 @@ import { Footer } from '@/shared/ui/Footer';
 
 export function RootLayout() {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1">
         <Outlet />

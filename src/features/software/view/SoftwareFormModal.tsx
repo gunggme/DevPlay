@@ -106,7 +106,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1">
+          <label htmlFor="name" className="mb-1 block text-sm font-medium text-foreground">
             소프트웨어 이름 *
           </label>
           <input
@@ -115,13 +115,13 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.name}
             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
             placeholder="소프트웨어 이름을 입력하세요"
           />
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-foreground mb-1">
+          <label htmlFor="description" className="mb-1 block text-sm font-medium text-foreground">
             설명 *
           </label>
           <textarea
@@ -129,14 +129,14 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.description}
             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
             rows={3}
             placeholder="소프트웨어에 대한 설명을 입력하세요"
           />
         </div>
 
         <div>
-          <label htmlFor="category" className="block text-sm font-medium text-foreground mb-1">
+          <label htmlFor="category" className="mb-1 block text-sm font-medium text-foreground">
             카테고리 *
           </label>
           <select
@@ -144,7 +144,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.category}
             onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
           >
             <option value="">카테고리를 선택하세요</option>
             <option value="개발도구">개발도구</option>
@@ -164,7 +164,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
         </div>
 
         <div>
-          <label htmlFor="download_url" className="block text-sm font-medium text-foreground mb-1">
+          <label htmlFor="download_url" className="mb-1 block text-sm font-medium text-foreground">
             다운로드 URL *
           </label>
           <input
@@ -173,13 +173,13 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             required
             value={formData.download_url}
             onChange={(e) => setFormData(prev => ({ ...prev, download_url: e.target.value }))}
-            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
             placeholder="https://example.com/download"
           />
         </div>
 
         <div>
-          <label htmlFor="github_url" className="block text-sm font-medium text-foreground mb-1">
+          <label htmlFor="github_url" className="mb-1 block text-sm font-medium text-foreground">
             GitHub URL (선택사항)
           </label>
           <input
@@ -187,13 +187,13 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             id="github_url"
             value={formData.github_url}
             onChange={(e) => setFormData(prev => ({ ...prev, github_url: e.target.value }))}
-            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
             placeholder="https://github.com/username/repo"
           />
         </div>
 
         <div>
-          <label htmlFor="image_url" className="block text-sm font-medium text-foreground mb-1">
+          <label htmlFor="image_url" className="mb-1 block text-sm font-medium text-foreground">
             이미지 URL (선택사항)
           </label>
           <input
@@ -201,23 +201,23 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
             id="image_url"
             value={formData.image_url}
             onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
-            className="w-full p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+            className="w-full rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
             placeholder="https://example.com/image.png"
           />
         </div>
 
         {/* 태그 입력 */}
         <div>
-          <label className="block text-sm font-medium text-foreground mb-1">
+          <label className="mb-1 block text-sm font-medium text-foreground">
             태그 (선택사항)
           </label>
-          <div className="flex space-x-2 mb-2">
+          <div className="mb-2 flex space-x-2">
             <input
               type="text"
               value={newTag}
               onChange={(e) => setNewTag(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
-              className="flex-1 p-2 border border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary focus:border-primary"
+              className="flex-1 rounded-md border border-input bg-background p-2 text-foreground focus:border-primary focus:ring-2 focus:ring-primary"
               placeholder="태그를 입력하세요"
             />
             <Button
@@ -232,11 +232,11 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
 
           {/* 현재 태그 */}
           {formData.tags && formData.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="mb-2 flex flex-wrap gap-2">
               {formData.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center px-2 py-1 rounded-full text-sm bg-primary/20 text-primary"
+                  className="inline-flex items-center rounded-full bg-primary/20 px-2 py-1 text-sm text-primary"
                 >
                   {tag}
                   <button
@@ -254,16 +254,16 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
           {/* 인기 태그 */}
           {popularTags && popularTags.length > 0 && (
             <div>
-              <p className="text-xs text-muted-foreground mb-1">인기 태그:</p>
+              <p className="mb-1 text-xs text-muted-foreground">인기 태그:</p>
               <div className="flex flex-wrap gap-1">
                 {popularTags.map((tag) => (
                   <button
                     key={tag}
                     type="button"
                     onClick={() => handlePopularTagClick(tag)}
-                    className={`px-2 py-1 rounded text-xs transition-colors ${
+                    className={`rounded px-2 py-1 text-xs transition-colors ${
                       formData.tags?.includes(tag)
-                        ? 'bg-primary text-primary-foreground cursor-not-allowed'
+                        ? 'cursor-not-allowed bg-primary text-primary-foreground'
                         : 'bg-muted text-muted-foreground hover:bg-muted/80'
                     }`}
                     disabled={formData.tags?.includes(tag)}
@@ -276,7 +276,7 @@ export function SoftwareFormModal({ isOpen, onClose, software }: SoftwareFormMod
           )}
         </div>
 
-        <div className="flex space-x-2 pt-4 border-t">
+        <div className="flex space-x-2 border-t pt-4">
           <Button
             type="submit"
             disabled={isSubmitting}
