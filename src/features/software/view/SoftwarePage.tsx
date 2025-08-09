@@ -3,16 +3,24 @@ import { Button } from '@/shared/ui/Button';
 import { SoftwareFormModal } from './SoftwareFormModal';
 import type { Software } from '@/shared/api/software';
 import { useAppSelector } from '@/store/hooks';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 
 export function SoftwarePage() {
   const { profile } = useAppSelector((state) => state.auth);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [editingSoftware, setEditingSoftware] = useState<Software | undefined>();
+  const [searchInput, setSearchInput] = useState('');
+  const debouncedSearch = useDebounce(searchInput, 500);
   const [filters, setFilters] = useState({
     category: '',
     search: ''
   });
+
+  // Update filters when debounced search changes
+  useEffect(() => {
+    setFilters(prev => ({ ...prev, search: debouncedSearch }));
+  }, [debouncedSearch]);
 
   const { data: softwareList, isLoading } = useSoftwareList(filters);
   const { data: categories } = useCategories();
@@ -90,11 +98,14 @@ export function SoftwarePage() {
               </label>
               <input
                 type="text"
-                value={filters.search}
-                onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="소프트웨어 이름 또는 설명 검색"
                 className="w-full p-2 border rounded-md bg-background text-foreground"
               />
+              {searchInput !== debouncedSearch && (
+                <p className="text-xs text-muted-foreground mt-1">검색 중...</p>
+              )}
             </div>
           </div>
         </div>
